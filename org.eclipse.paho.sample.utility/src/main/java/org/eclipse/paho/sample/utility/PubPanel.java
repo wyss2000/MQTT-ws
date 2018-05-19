@@ -139,10 +139,12 @@ public class PubPanel implements ActionListener, DocumentListener {
         hexDisplay = false;
         hexButton = new JButton( "Hex" );
         hexButton.addActionListener( this );
+        hexButton.setVisible(false);
         
 		fileButton = new JButton( "Arquivo..." );
 		fileButton.setEnabled(true);
 		fileButton.addActionListener( this );
+                fileButton.setVisible(false);
 
 		pubButton = new JButton( "Publicar" );
 		pubButton.setEnabled(false);
