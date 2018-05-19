@@ -178,10 +178,12 @@ public class SubPanel implements ActionListener {
         hexDisplay = false;
         hexButton = new JButton( "Hex" );
         hexButton.addActionListener( this );
+        hexButton.setVisible(false);
 
 		fileButton = new JButton( "Salvar..." );
 		fileButton.setEnabled(true);
 		fileButton.addActionListener( this );
+                fileButton.setVisible(false);
 
     	subButton = new JButton( "Subscrever" );
     	subButton.setEnabled(false);
