@@ -253,17 +253,17 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
         led.setRed();
         new Thread(led).start();
         
-        connect = new JButton( "Connect" );
-        disconnect = new JButton( "Disconnect" );
+        connect = new JButton( "Conectar" );
+        disconnect = new JButton( "Desconectar" );
         disconnect.setEnabled(false);
-        JButton history = new JButton("History");
+        JButton history = new JButton("Histórico");
                 
         connect.addActionListener(this);        
         disconnect.addActionListener(this);
         history.addActionListener(this);
         
         JPanel text = new JPanel();
-        text.add( new JLabel("Broker TCP/IP address: ") );
+        text.add( new JLabel("Endereço TCP/IP do Broker: ") );
         text.add( ipAddress );
         text.add( port );
         
@@ -296,7 +296,7 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
         // Now construct the tabbed pane
         JTabbedPane tabbedGui = new JTabbedPane();
         tabbedGui.addTab( "MQTT", mqttComp );
-        tabbedGui.addTab( "Options", optionsComp );
+        //tabbedGui.addTab( "Opções", optionsComp );
         
         contentPane.add( tabbedGui );
 }
@@ -318,13 +318,13 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
     		try {
     		    mqtt.getTopic(topic).publish( message, qos, retained );
     		} catch ( MqttException ex ) {
-        		setTitleText( "MQTT publish exception !" );
-        		JOptionPane.showMessageDialog( frame, ex.getClass().getName() + "\n" + ex.getMessage(), "MQTT Publish Exception", JOptionPane.ERROR_MESSAGE );
+        		setTitleText( "Exceção de publicação no MQTT !" );
+        		JOptionPane.showMessageDialog( frame, ex.getClass().getName() + "\n" + ex.getMessage(), "Exceção de publicação no MQTT", JOptionPane.ERROR_MESSAGE );
         		throw ex;
     		}	
     	} else {
-    		setTitleText( "MQTT client not connected !" );
-    		throw new Exception( "MQTT client not connected" );
+    		setTitleText( "Cliente MQTT não conectado !" );
+    		throw new Exception( "Cliente MQTT não conectado" );
     	}		
     }	
     
@@ -346,7 +346,7 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
   			try {
   				mqtt.disconnect();
    			} catch ( Exception ex ) {
-    			setTitleText( "MQTT disconnect error !" );
+    			setTitleText( "Erro ao desconectar MQTT !" );
    				ex.printStackTrace();
    				System.exit(1);
    			}	 
@@ -363,7 +363,7 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
         setConnected( false );
 		
    	    synchronized(this) { // Grab the log synchronisation lock
-     		writeLogln("WebSphere MQ Telemetry transport disconnected" );
+     		writeLogln("WebSphere MQTT desconectado" );
 		}	
     }	
     
@@ -437,9 +437,9 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
 
         	    synchronized(this) { // Grab the log synchronisation lock
                   if ( sub ) {
-            	      writeLogln( "  --> SUBSCRIBE,        TOPIC:" + topic + ", Requested QoS:" + qos );
+            	      writeLogln( "  --> SUBSCRITO,        TÓPICO:" + topic + ", Nível QoS:" + qos );
                   } else {
-                	  writeLogln( "  --> UNSUBSCRIBE,      TOPIC:" + topic );
+                	  writeLogln( "  --> SUBSCRIÇÃO REMOVIDA,      TÓPICO:" + topic );
                   }	  
         	    }
         	      
@@ -450,11 +450,11 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
                 }	  
     		  
     		} catch ( Exception ex ) {
-        		setTitleText( "MQTT subscription exception caught !" );
-        		JOptionPane.showMessageDialog( frame, ex.getMessage(), "MQTT Subscription Exception", JOptionPane.ERROR_MESSAGE );
+        		setTitleText( "Exceção de assinatura do MQTT capturada !" );
+        		JOptionPane.showMessageDialog( frame, ex.getMessage(), "Exceção de Assinatura MQTT", JOptionPane.ERROR_MESSAGE );
     		}	
     	} else {
-    		setTitleText( "MQTT client not connected !" );
+    		setTitleText( "Cliente MQTT não conectado !" );
     	}		
     }	
     
@@ -491,9 +491,9 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
 	    	setConnected( true );
 			
 		} catch( NumberFormatException nfe ) {
-       		JOptionPane.showMessageDialog( frame, "Invalid port number !", "MQTT Connect Exception", JOptionPane.ERROR_MESSAGE );
+       		JOptionPane.showMessageDialog( frame, "Número de porta inválido !", "Exceção de Conexão MQTT", JOptionPane.ERROR_MESSAGE );
 		} catch ( MqttException mqe ) {
-       		setTitleText( "MQTT connect failed !" );
+       		setTitleText( "A conexão MQTT falhou !" );
        		Throwable e = mqe.getCause();
        		String msg = "";
        		if ( e == null ) {
@@ -502,11 +502,11 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
        			msg += mqe.getMessage() + "\n";
        		}
        		msg += e;
-       		JOptionPane.showMessageDialog( frame, msg, "MQTT Connect Exception", JOptionPane.ERROR_MESSAGE );
+       		JOptionPane.showMessageDialog( frame, msg, "Exceção de Conexão MQTT", JOptionPane.ERROR_MESSAGE );
        		e.printStackTrace();
 		} catch ( Exception ex ) {
-       		setTitleText( "MQTT connect failed !" );
-       		JOptionPane.showMessageDialog( frame, ex, "MQTT Connect Exception", JOptionPane.ERROR_MESSAGE );
+       		setTitleText( "A conexão MQTT falhou !" );
+       		JOptionPane.showMessageDialog( frame, ex, "Exceção de Conexão MQTT", JOptionPane.ERROR_MESSAGE );
        		ex.printStackTrace();
   		}
     		
@@ -517,9 +517,9 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
     				
    	    synchronized(this) { // Grab the log synchronisation lock
    			if ( connected ) {
-         		writeLogln("WebSphere MQ Telemetry transport connected to " + mqtt.getServerURI() );
+         		writeLogln("WebSphere MQTT conectado a " + mqtt.getServerURI() );
    	   		} else {
-   	      		writeLogln("ERROR:WebSphere MQ Telemetry transport failed to connect to " + connStr );
+   	      		writeLogln("ERROR:WebSphere MQTT falhou em conectar a " + connStr );
     	    }	
         }    
 
@@ -538,7 +538,7 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
    		
 		setTitleText( "" );
 
-   		if ( e.getActionCommand().equals("Connect") ) {
+   		if ( e.getActionCommand().equals("Conectar") ) {
    			// When the connect button is pressed we are either connected or not connected
    			// If we are connected then say so.
    			// If we are not connected then
@@ -546,7 +546,7 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
    			//         This allows the GUI thread to return and paint the window correctly
    			if ( connected ) {
    				    // Already connected
-            		setTitleText( "MQTT session already active !" );
+            		setTitleText( "Sessão MQTT já está ativa !" );
    			} else {
    				// Initialise the GUI prior to connecting by setting the LED to amber.
    				// Start a thread to do the connect.
@@ -555,14 +555,14 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
    				connected = false;
    				new Thread(this).start();
    			}	
-   		} else if ( e.getActionCommand().equals("Disconnect") ) {
+   		} else if ( e.getActionCommand().equals("Desconectar") ) {
    			if ( connected ) {
     			// Disconnect from the broker
     			disconnect();
    			}	else {
-    			setTitleText( "MQTT client not connected !" );
+    			setTitleText( "Cliente MQTT não conectado !" );
    			}	
-   		} else if ( e.getActionCommand().equals("History") ) {
+   		} else if ( e.getActionCommand().equals("Histórico") ) {
    			historyComp.enableHistory();
    		}	
         		
@@ -576,9 +576,9 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
    	// created by the Java MQTT Client
    	public synchronized void setTitleText( String extraText ) {
    		if ( extraText.equals("") ) {
-     		frame.setTitle( "Paho MQTT Utility" );
+     		frame.setTitle( "Utilitário MQTT(Paho)" );
    		} else {
-    		frame.setTitle( "Paho MQTT Utility - " + extraText );
+    		frame.setTitle( "Utilitário MQTT(Paho) - " + extraText );
    		}		
    	}	
 
@@ -596,9 +596,9 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
     	led.setAmber();
     	led.setFlash();
     	
-    	setTitleText( "Connection Lost!....Reconnecting" );
+    	setTitleText( "Conexão perdida!....Reconectando" );
    	    synchronized(this) { // Grab the log synchronisation lock
-     		writeLogln( "MQTT Connection Lost!....Reconnecting to " + mqtt.getServerURI() );
+     		writeLogln( "Conexão MQTT perdida!....Reconectando a " + mqtt.getServerURI() );
    	    }	
 
     	try {
@@ -616,7 +616,7 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
 
         	    synchronized(this) { // Grab the log synchronisation lock
         	    	if ( connected ) {
-        	    		writeLog( "MQTT reconnecting......" );
+        	    		writeLog( "Reconectando MQTT......" );
         	    		try {
 				    connect( mqtt.getServerURI(), optionsComp.isPersistenceSelected() );
         	    			rc = 0;
@@ -625,9 +625,9 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
         	    			rc = -1;
         	    		}		
         	    		if ( rc == -1 ) {
-        	    			writeLogln( "failed" );
+        	    			writeLogln( "falhou" );
         	    		} else {
-        	    			writeLogln( "success !" );
+        	    			writeLogln( "sucesso !" );
         	    		}		
         	    	}
         	    }
@@ -635,7 +635,7 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
     		// Remove title text once we have reconnected
         	setTitleText( "" );
     	} catch (Exception ex) {
-    		setTitleText( "MQTT connection broken !" );
+    		setTitleText( "Conexão MQTT finalizada !" );
     		ex.printStackTrace();
     		disconnect();
     		//throw ex;
@@ -753,8 +753,8 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
     	traceEnabled = false;
     	if ( mqtt != null ) {
 	    /*mqtt.stopTrace()*/;
-     		JOptionPane.showMessageDialog( frame, "Trace file mqe0.trc generated in the current directory",
-        		 "MQTT Trace", JOptionPane.INFORMATION_MESSAGE );
+     		JOptionPane.showMessageDialog( frame, "Arquivo de rastreio mqe0.trc gerado no diretório atual",
+        		 "Rastreio MQTT", JOptionPane.INFORMATION_MESSAGE );
     	}	
     }	
         
@@ -775,7 +775,7 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
     		try {
             	historyComp.write( logdata );
     		} catch (Exception e) {
-    			setTitleText("Log write failed!"); 
+    			setTitleText("Falha na gravação de Log!"); 
             }		
     	}	
     }

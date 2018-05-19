@@ -63,7 +63,7 @@ public class SubPanel implements ActionListener {
     private JButton fileButton;
     private JButton subButton;
     private JButton unsubButton;
-    private static final String PANEL_TITLE = " Subscribe To Topics";
+    private static final String PANEL_TITLE = " Subscrever em Tópico";
 	private File fileChooserCurrentDir = null;
 	private byte[] fileContent = null;
     
@@ -127,15 +127,15 @@ public class SubPanel implements ActionListener {
         qosList = new JComboBox( qos );
 		qosList.setSelectedIndex( 0 );
 		qosList.setMaximumSize( MQTTFrame.DROP_DOWN_DIMENSION );
-		qosList.setToolTipText("The QoS at which publications will be delivered");
+		qosList.setToolTipText("Nível QoS no qual as publicações serão entregues");
 
         // Create the components to go in the NORTH panel
         // Create a horizontal box layout in which to display the topic sent and its label
         JPanel sendTopicPanel = new JPanel();
         sendTopicPanel.setLayout( new BoxLayout( sendTopicPanel, BoxLayout.X_AXIS) );
-        sendTopicPanel.add( new JLabel(" Subscribe Topic:") );
+        sendTopicPanel.add( new JLabel(" Tópico subscrito:") );
         sendTopicPanel.add( topic );
-        sendTopicPanel.add( new JLabel(" Request QoS:") );
+        sendTopicPanel.add( new JLabel(" Solicitar QoS:") );
         sendTopicPanel.add( qosList );
         // Keep the qoslist from being right up against the edge of the window by adding some spaces
         sendTopicPanel.add( new JLabel("  ") );
@@ -143,11 +143,11 @@ public class SubPanel implements ActionListener {
         // Create a horizontal box layout in which to display the topic rcvd and its label
         JPanel rcvdTopicPanel = new JPanel();
         rcvdTopicPanel.setLayout( new BoxLayout( rcvdTopicPanel, BoxLayout.X_AXIS ) );
-        rcvdTopicPanel.add( new JLabel(" Received Topic:") );
+        rcvdTopicPanel.add( new JLabel(" Tópico recebido:") );
         rcvdTopicPanel.add( receivedTopic );
         rcvdTopicPanel.add( new JLabel(" QoS:") );
         rcvdTopicPanel.add( receivedQoS );
-        rcvdTopicPanel.add( new JLabel(" Retained:") );
+        rcvdTopicPanel.add( new JLabel(" Reter:") );
         rcvdTopicPanel.add( receivedRetain );
         
         // Add some white space in to stop the receivedTopic field being sized to the whole width of the GUI
@@ -160,7 +160,7 @@ public class SubPanel implements ActionListener {
         titleAndTopics.setLayout( new GridLayout( 3, 1 ) );
         
         // Add a title in BOLD        
-        subLabel = new JLabel( PANEL_TITLE + " - text display");
+        subLabel = new JLabel( PANEL_TITLE + " - exibição de texto");
         Font f = subLabel.getFont();
         subLabel.setFont( new Font( f.getName(), Font.BOLD, f.getSize() + 1 ) );
         
@@ -179,15 +179,15 @@ public class SubPanel implements ActionListener {
         hexButton = new JButton( "Hex" );
         hexButton.addActionListener( this );
 
-		fileButton = new JButton( "Save..." );
+		fileButton = new JButton( "Salvar..." );
 		fileButton.setEnabled(true);
 		fileButton.addActionListener( this );
 
-    	subButton = new JButton( "Subscribe" );
+    	subButton = new JButton( "Subscrever" );
     	subButton.setEnabled(false);
 		subButton.addActionListener( this );
 
-   	    unsubButton = new JButton( "Unsubscribe" );
+   	    unsubButton = new JButton( "Remover subsc" );
     	unsubButton.setEnabled(false);
 		unsubButton.addActionListener( this );
         
@@ -234,13 +234,13 @@ public class SubPanel implements ActionListener {
     		mqttMgr.updatePublishTopicList( topicName );
     	}
     	
-    	if ( e.getActionCommand().equals( "Subscribe" ) ) {
+    	if ( e.getActionCommand().equals( "Subscrever" ) ) {
             // Subscribe
             mqttMgr.subscription( topicName, qosList.getSelectedIndex(), true );
-        } else if ( e.getActionCommand().equals("Unsubscribe") ){
+        } else if ( e.getActionCommand().equals("Remover subsc") ){
             // Unsubscribe
             mqttMgr.subscription( topicName, 0, false );
-    	} else if ( e.getActionCommand().equals("Save...") ) {
+    	} else if ( e.getActionCommand().equals("Salvar...") ) {
     		JFileChooser selectFile = new JFileChooser( fileChooserCurrentDir );
     		selectFile.setMultiSelectionEnabled( false );
     		if ( selectFile.showSaveDialog( subPanel ) == JFileChooser.APPROVE_OPTION ) {
@@ -252,9 +252,9 @@ public class SubPanel implements ActionListener {
 	    			output = new FileOutputStream( theFile );
 	    			output.write( fileContent );
     			} catch( FileNotFoundException fnfe ) {
-    				JOptionPane.showMessageDialog( subPanel, fnfe.getMessage(), "File Save Error", JOptionPane.ERROR_MESSAGE );
+    				JOptionPane.showMessageDialog( subPanel, fnfe.getMessage(), "Erro ao salvar arquivo", JOptionPane.ERROR_MESSAGE );
     			} catch( IOException ioe ) {
-    				JOptionPane.showMessageDialog( subPanel, ioe.getMessage(), "File Save Error", JOptionPane.ERROR_MESSAGE );
+    				JOptionPane.showMessageDialog( subPanel, ioe.getMessage(), "Erro ao salvar arquivo", JOptionPane.ERROR_MESSAGE );
     			}	
     			
     			// Now close the file if we can
@@ -308,8 +308,8 @@ public class SubPanel implements ActionListener {
      	
      	// When writing the data to the log get it from the receivedData text area, so that it is in the correct format - Hex or Text
    	    synchronized(mqttMgr) { // Grab the log synchronisation lock
-         	mqttMgr.writeLogln( "  --> PUBLISH received, TOPIC:" + topic + ", QoS:" + QoS + ", Retained:" + retained );
-        	mqttMgr.writeLog( "                        DATA:" );
+         	mqttMgr.writeLogln( "  --> PUBLICAÇÃO recebida, TÓPICO:" + topic + ", QoS:" + QoS + ", Retida:" + retained );
+        	mqttMgr.writeLog( "                        DADOS:" );
     	    if ( writeHex ) {
         		// Prefix hex data with 0x
             	mqttMgr.writeLog( "0x" );
@@ -349,9 +349,9 @@ public class SubPanel implements ActionListener {
     	}	
     	
         hexDisplay = true;
-        subLabel.setText( PANEL_TITLE + " - hexadecimal display" );
+        subLabel.setText( PANEL_TITLE + " - exibição em hexadecimal" );
         mqttMgr.setTitleText("");
-        hexButton.setText("Text");
+        hexButton.setText("Texto");
     	receivedData.setText( hexText.toString() );
     }	
     
@@ -365,8 +365,8 @@ public class SubPanel implements ActionListener {
     	String hexText = receivedData.getText();
     	
     	if ( hexText.length() % 2 != 0 ) {
-    		System.out.println( "Hex length" + hexText.length() );
-    		mqttMgr.setTitleText( "Odd number of hex characters!" );
+    		System.out.println( "Comprimento Hex" + hexText.length() );
+    		mqttMgr.setTitleText( "Número ímpar de caracteres hexadecimal!" );
     	} else {
     		try {
                 byte[] charArray = new byte[hexText.length()/2];    
@@ -377,13 +377,13 @@ public class SubPanel implements ActionListener {
     		    }	
 
                 hexDisplay = false;
-                subLabel.setText( PANEL_TITLE + " - text display" );
+                subLabel.setText( PANEL_TITLE + " - exibição de texto" );
     			mqttMgr.setTitleText( "" );
                 hexButton.setText("Hex");
     		    receivedData.setText( new String(charArray) );
     		} catch( NumberFormatException nfe ) {
 
-    			mqttMgr.setTitleText( "Invalid hexadecimal data!" );
+    			mqttMgr.setTitleText( "Dados hexadecimais inválidos!" );
     		}	    
     	}	
     }	

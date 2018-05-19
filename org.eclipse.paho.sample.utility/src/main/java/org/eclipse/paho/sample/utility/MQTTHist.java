@@ -62,15 +62,15 @@ public class MQTTHist extends JDialog implements ActionListener, Runnable {
         
         // Clear button
         // Add an actionlistener and tooltip to the button
-        JButton clear = new JButton("Clear");
+        JButton clear = new JButton("Limpar");
         clear.addActionListener(this);
-        clear.setToolTipText( "Clear history dialog" );
+        clear.setToolTipText( "Limpar lançamentos do histórico" );
 
         // Enable/Disable button
         // Add an actionlistener and tooltip to the button
-        close = new JButton("Close");
+        close = new JButton("Fechar");
         close.addActionListener(this);
-        close.setToolTipText( "Close history log" );
+        close.setToolTipText( "Fechar janela de histórico" );
 
         // Create button components
         // SOUTH pane - Close and reset buttons
@@ -146,9 +146,9 @@ public class MQTTHist extends JDialog implements ActionListener, Runnable {
 	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if ( e.getActionCommand().equals("Clear") ) {   			
+		if ( e.getActionCommand().equals("Limpar") ) {   			
             histData.setText("");
-   		} else if ( e.getActionCommand().equals("Close") ) {
+   		} else if ( e.getActionCommand().equals("Fechar") ) {
    			// Log is being enabled / disabled
    			disableHistory();
    		}

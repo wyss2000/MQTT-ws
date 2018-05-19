@@ -68,7 +68,7 @@ public class PubPanel implements ActionListener, DocumentListener {
 	private JCheckBox retained;
 	private MQTTFrame mqttMgr = null;
 	private JLabel pubLabel = null;
-	private static final String PANEL_TITLE = " Publish Messages";
+	private static final String PANEL_TITLE = " Publicar Mensagens";
 	private File fileChooserCurrentDir = null;
 	private byte[] fileContent = null;
 		
@@ -113,7 +113,7 @@ public class PubPanel implements ActionListener, DocumentListener {
 
         // Create the components to go in the NORTH panel
         // Create the title label for the pubPanel
-        pubLabel = new JLabel( PANEL_TITLE  + " - text display" );
+        pubLabel = new JLabel( PANEL_TITLE  + " - exibição de texto" );
         Font f = pubLabel.getFont();
         pubLabel.setFont( new Font( f.getName(), Font.BOLD, f.getSize() + 1 ) );
 
@@ -121,11 +121,11 @@ public class PubPanel implements ActionListener, DocumentListener {
         // Then place this horizontal layout below the title "Publish Messages"
         JPanel topicBox = new JPanel();
         topicBox.setLayout( new BoxLayout( topicBox, BoxLayout.X_AXIS ) );
-        topicBox.add( new JLabel(" Topic:") );
+        topicBox.add( new JLabel(" Tópico:") );
         topicBox.add( topic );
         topicBox.add( new JLabel(" QoS:") );
         topicBox.add( qosList );
-        topicBox.add( new JLabel(" Retained:") );
+        topicBox.add( new JLabel(" Reter:") );
         topicBox.add( retained );
         
         // Add everything to the panel that will be inserted into the NORTH of the pubPanel
@@ -140,11 +140,11 @@ public class PubPanel implements ActionListener, DocumentListener {
         hexButton = new JButton( "Hex" );
         hexButton.addActionListener( this );
         
-		fileButton = new JButton( "File..." );
+		fileButton = new JButton( "Arquivo..." );
 		fileButton.setEnabled(true);
 		fileButton.addActionListener( this );
 
-		pubButton = new JButton( "Publish" );
+		pubButton = new JButton( "Publicar" );
 		pubButton.setEnabled(false);
 		pubButton.addActionListener( this );
 
@@ -192,7 +192,7 @@ public class PubPanel implements ActionListener, DocumentListener {
     	boolean hexData = hexDisplay;
     	boolean pubSuccess = false;
     	
-    	if ( e.getActionCommand().equals("Publish") ) {
+    	if ( e.getActionCommand().equals("Publicar") ) {
     		if ( hexDisplay == true ) {
     			// Convert the display to the characters we want to send
     			toCharString();
@@ -228,12 +228,12 @@ public class PubPanel implements ActionListener, DocumentListener {
     	    synchronized(mqttMgr) { // Grab the log synchronisation lock
          	    if ( pubSuccess ) {
                  	// When writing the data to the log get it from the receivedData text area, so that it is in the correct format - Hex or Text
-                    mqttMgr.writeLogln( "  --> PUBLISH sent,     TOPIC:" + topicName + ", QoS:" + qosList.getSelectedIndex() + ", Retained:" + retained.isSelected() );
+                    mqttMgr.writeLogln( "  --> PUBLICAÇÃO enviada,     TÓPICO:" + topicName + ", QoS:" + qosList.getSelectedIndex() + ", Retida:" + retained.isSelected() );
         	    } else {
-                    mqttMgr.writeLogln( " *--> PUBLISH send FAILED, TOPIC:" + topicName + ", QoS:" + qosList.getSelectedIndex() + ", Retained:" + retained.isSelected() );
+                    mqttMgr.writeLogln( " *--> Envio de PUBLICAÇÃO FALHOU, TÓPICO:" + topicName + ", QoS:" + qosList.getSelectedIndex() + ", Retida:" + retained.isSelected() );
      	        }		
 
-            	mqttMgr.writeLog(   "                        DATA:" );
+            	mqttMgr.writeLog(   "                        DADOS:" );
         	    if ( hexData ) {
         		    // Prefix hex data with 0x
                 	mqttMgr.writeLog( "0x" );
@@ -245,7 +245,7 @@ public class PubPanel implements ActionListener, DocumentListener {
      	        }		
     	    }    
 
-    	} else if ( e.getActionCommand().equals("File...") ) {
+    	} else if ( e.getActionCommand().equals("Arquivo...") ) {
     		JFileChooser selectFile = new JFileChooser( fileChooserCurrentDir );
     		selectFile.setMultiSelectionEnabled( false );
     		if ( selectFile.showOpenDialog( pubPanel ) == JFileChooser.APPROVE_OPTION ) {
@@ -263,9 +263,9 @@ public class PubPanel implements ActionListener, DocumentListener {
         	        pubData.getDocument().addDocumentListener( this );
         	        
     			} catch( FileNotFoundException fnfe ) {
-    				JOptionPane.showMessageDialog( pubPanel, fnfe.getMessage(), "File Open Error", JOptionPane.ERROR_MESSAGE );
+    				JOptionPane.showMessageDialog( pubPanel, fnfe.getMessage(), "Erro ao abrir arquivo", JOptionPane.ERROR_MESSAGE );
     			} catch( IOException ioe ) {
-    				JOptionPane.showMessageDialog( pubPanel, ioe.getMessage(), "File Open Error", JOptionPane.ERROR_MESSAGE );
+    				JOptionPane.showMessageDialog( pubPanel, ioe.getMessage(), "Erro ao abrir arquivo", JOptionPane.ERROR_MESSAGE );
     			}	
     		}	
       	} else {
@@ -307,9 +307,9 @@ public class PubPanel implements ActionListener, DocumentListener {
     	}	
     	
         hexDisplay = true;
-        pubLabel.setText( PANEL_TITLE + " - hexadecimal display" );
+        pubLabel.setText( PANEL_TITLE + " - exibição em hexadecimal" );
         mqttMgr.setTitleText("");
-        hexButton.setText("Text");
+        hexButton.setText("Texto");
     	pubData.setText( hexText.toString() );
     }	
     
@@ -323,7 +323,7 @@ public class PubPanel implements ActionListener, DocumentListener {
     	String hexText = pubData.getText();
     	
     	if ( hexText.length() % 2 != 0 ) {
-    		mqttMgr.setTitleText( "Odd number of hex characters!" );
+    		mqttMgr.setTitleText( "Número ímpar de caracteres hexadecimais!" );
     	} else {
     		try {
                 byte[] charArray = new byte[hexText.length()/2];    
@@ -334,12 +334,12 @@ public class PubPanel implements ActionListener, DocumentListener {
     		    }	
 
                 hexDisplay = false;
-                pubLabel.setText( PANEL_TITLE + " - text display" );
+                pubLabel.setText( PANEL_TITLE + " - exibição de texto" );
                 mqttMgr.setTitleText("");
                 hexButton.setText("Hex");
     		    pubData.setText( new String(charArray) );
     		} catch( NumberFormatException nfe ) {
-    			mqttMgr.setTitleText( "Invalid hexadecimal data!" );
+    			mqttMgr.setTitleText( "Dados hexadecimais inválidos!" );
     		}	    
     	}	
     }	

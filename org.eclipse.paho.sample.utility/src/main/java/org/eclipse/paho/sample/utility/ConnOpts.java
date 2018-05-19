@@ -91,14 +91,14 @@ public class ConnOpts extends JPanel implements ActionListener {
         persistEnable = new JCheckBox();
         Boolean b = new Boolean( props.getProperty( "Persistence", String.valueOf(false) ) );
         persistEnable.setSelected( b.booleanValue() );
-        persistEnable.setToolTipText("Persist publications to ensure delivery");
+        persistEnable.setToolTipText("Publicações persistentes para garantir a entrega");
                 
         // Default button
         // Add an actionlistener and tooltip to the button
         
-        JButton reset = new JButton("Default");
+        JButton reset = new JButton("Padrão");
         reset.addActionListener(this);
-        reset.setToolTipText( "Options will be set to default" );
+        reset.setToolTipText( "As opções serão definidas como padrão" );
         
         // Create components to go in the NORTH panel of the dialog
         // Top part
@@ -107,10 +107,10 @@ public class ConnOpts extends JPanel implements ActionListener {
         top.setLayout( new GridLayout(6,1) );
 
         // Create a title in BOLD with a trace button
-        JLabel optsLabel = new JLabel("Session Options:    ", SwingConstants.LEFT);
+        JLabel optsLabel = new JLabel("Opções de seção    ", SwingConstants.LEFT);
         Font f = optsLabel.getFont();
         optsLabel.setFont( new Font( f.getName(), Font.BOLD, f.getSize() + 1 ) );
-        trace = new JButton("Trace(Start)");
+        trace = new JButton("Rastreio (Iniciar)");
         trace.addActionListener( this );
         
         JPanel optsLabelAndTrace = new JPanel();
@@ -123,29 +123,29 @@ public class ConnOpts extends JPanel implements ActionListener {
         JPanel cid = new JPanel();
         cid.setLayout( new FlowLayout( FlowLayout.LEFT) );
 
-        cid.add( new JLabel("Client Identifier:", SwingConstants.LEFT) );
+        cid.add( new JLabel("Identificador de Cliente:", SwingConstants.LEFT) );
         cid.add(clientId);
         
         // Create clean session and keep alive options
         JPanel clnSess = new JPanel();
         clnSess.setLayout( new FlowLayout( FlowLayout.LEFT ) );
-        clnSess.add( new JLabel("Clean Session:", SwingConstants.LEFT) );
+        clnSess.add( new JLabel("Sessão limpa:", SwingConstants.LEFT) );
         clnSess.add( cleanSession );
                 
         // Create retry interval and keep alive options
         JPanel timeouts = new JPanel();
         timeouts.setLayout( new FlowLayout( FlowLayout.LEFT ) );
 
-        timeouts.add( new JLabel( "Keep Alive:", SwingConstants.LEFT ) );
+        timeouts.add( new JLabel( "Manter ativo:", SwingConstants.LEFT ) );
         keepAlive = new JTextField(4);
         keepAlive.setText(KEEP_ALIVE);
         timeouts.add( keepAlive );
 
-        timeouts.add( new JLabel( " Retry Interval:", SwingConstants.LEFT ) );
+        timeouts.add( new JLabel( " Intervalo de repetição:", SwingConstants.LEFT ) );
         retryInterval = new JTextField(4);
         retryInterval.setText(RETRY_INT);
         timeouts.add( retryInterval );
-        timeouts.add( new JLabel( "seconds", SwingConstants.LEFT ) );
+        timeouts.add( new JLabel( "segundos", SwingConstants.LEFT ) );
          
         // Create a log file name field
         JPanel log = new JPanel();
@@ -195,7 +195,7 @@ public class ConnOpts extends JPanel implements ActionListener {
 		lwtQoS.setMaximumSize( MQTTFrame.DROP_DOWN_DIMENSION );
 
         // Create a title in BOLD
-        JLabel lwtLabel = new JLabel("Last Will and Testament Settings:", SwingConstants.LEFT);
+        JLabel lwtLabel = new JLabel("Último desejo e configurações de testamento:", SwingConstants.LEFT);
         Font fnt = lwtLabel.getFont();
         lwtLabel.setFont( new Font( fnt.getName(), Font.BOLD, fnt.getSize() + 1 ) );
 
@@ -203,11 +203,11 @@ public class ConnOpts extends JPanel implements ActionListener {
         JPanel lwtTopicOpts = new JPanel();
         lwtTopicOpts.setLayout( new BoxLayout( lwtTopicOpts, BoxLayout.X_AXIS) );
 
-        lwtTopicOpts.add( new JLabel("Topic:") );
+        lwtTopicOpts.add( new JLabel("Tópico:") );
         lwtTopicOpts.add( lwtTopic );
         lwtTopicOpts.add( new JLabel(" QoS:") );
         lwtTopicOpts.add( lwtQoS );
-        lwtTopicOpts.add( new JLabel(" Retained:") );
+        lwtTopicOpts.add( new JLabel(" Retida:") );
         lwtTopicOpts.add( lwtRetain );
 
         // Now add all the components for the LW&T NORTH panel to one panel
@@ -338,15 +338,15 @@ public class ConnOpts extends JPanel implements ActionListener {
      *     <LI>Default button pressed - action: Reset all fields in the dialog to their default values</LI></UL>
      */
 	public void actionPerformed(ActionEvent e) {
-		if ( e.getActionCommand().equals("Trace(Start)") ) {    
+		if ( e.getActionCommand().equals("Rastreio (Iniciar)") ) {    
    			try {
      			mqisdpMgr.startTrace();
-     			trace.setText("Trace(Stop)");
+     			trace.setText("Rastreio (Parar)");
    			} catch ( Exception ex ) {
    			}	
-   		} else if ( e.getActionCommand().equals("Trace(Stop)") ) {    
+   		} else if ( e.getActionCommand().equals("Rastreio (Parar)") ) {    
    			mqisdpMgr.stopTrace();
-   			trace.setText("Trace(Start)");
+   			trace.setText("Rastreio (Iniciar)");
    		} else {
    			// Reset button has been pressed
    			// Reset all the fields to their default values
