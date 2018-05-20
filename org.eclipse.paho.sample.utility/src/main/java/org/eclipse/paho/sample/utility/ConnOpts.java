@@ -151,11 +151,11 @@ public class ConnOpts extends JPanel implements ActionListener {
         JPanel log = new JPanel();
         log.setLayout( new FlowLayout( FlowLayout.LEFT) );
 
-        log.add( new JLabel("Use persistence:", SwingConstants.LEFT) );
+        log.add( new JLabel("Usar persistência:", SwingConstants.LEFT) );
         log.add(persistEnable);
         persistDir = new JTextField( props.getProperty("PersistenceDir", DEF_PERSIST_DIR), 15);
-        persistDir.setToolTipText("Enter the root directory for the log");
-        log.add( new JLabel(" Directory:", SwingConstants.LEFT ) );
+        persistDir.setToolTipText("Digite o diretório raiz para o Log");
+        log.add( new JLabel(" Diretório:", SwingConstants.LEFT ) );
         log.add( persistDir );
         
         
