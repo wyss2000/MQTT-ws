@@ -44,7 +44,6 @@ public class ConexaoAccessJava8 {
 			}
  
 			rs.close();
-			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
