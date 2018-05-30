@@ -27,6 +27,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -215,7 +217,18 @@ public class PubPanel implements ActionListener, DocumentListener {
                 				   (fileContent == null) ? pubText.getBytes() : fileContent,
                 				   qosList.getSelectedIndex(),
                 				   retained.isSelected() );
+                try {
+                    ConexaoAccessJava8 conecta = new ConexaoAccessJava8();
+                    conecta.conexao();
+                    PreparedStatement pst = conecta.conn.prepareStatement("insert into Clie1 (ID)values(?)");
+                    pst.setString(1, "Dona Chica");
+                    pst.executeUpdate();
+                    System.out.println("Salvo com sucesso");
+                } catch (SQLException ex) {
+                    System.out.println("Erro no salvamento: " +ex);
+                }
                 pubSuccess = true;
+                
         	} catch( Exception ex) {
         		// Publish failed
         		pubSuccess = false;
