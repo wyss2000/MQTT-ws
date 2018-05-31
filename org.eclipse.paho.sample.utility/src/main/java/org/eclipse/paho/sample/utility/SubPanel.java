@@ -59,7 +59,7 @@ public class SubPanel implements ActionListener {
 	private JComboBox qosList;
 	private boolean hexDisplay = true;
     private JLabel subLabel = null;
-    private JButton hexButton = null;
+    //private JButton hexButton = null;
     private JButton fileButton;
     private JButton subButton;
     private JButton unsubButton;
@@ -176,14 +176,13 @@ public class SubPanel implements ActionListener {
         buttons.setLayout( new GridLayout(4,1) );
         
         hexDisplay = false;
-        hexButton = new JButton( "Hex" );
-        hexButton.addActionListener( this );
-        hexButton.setVisible(false);
+        //hexButton = new JButton( "Salvar em Clie2" );
+        //hexButton.addActionListener( this );
+        //hexButton.setVisible(false);
 
 		fileButton = new JButton( "Salvar..." );
 		fileButton.setEnabled(true);
 		fileButton.addActionListener( this );
-                fileButton.setVisible(false);
 
     	subButton = new JButton( "Subscrever" );
     	subButton.setEnabled(false);
@@ -196,7 +195,7 @@ public class SubPanel implements ActionListener {
         buttons.add( subButton );
         buttons.add( unsubButton );
         buttons.add( fileButton );
-        buttons.add( hexButton );
+        //buttons.add( hexButton );
 
 		subButtonsLayout.add( buttons );
 
@@ -243,35 +242,35 @@ public class SubPanel implements ActionListener {
             // Unsubscribe
             mqttMgr.subscription( topicName, 0, false );
     	} else if ( e.getActionCommand().equals("Salvar...") ) {
-    		JFileChooser selectFile = new JFileChooser( fileChooserCurrentDir );
-    		selectFile.setMultiSelectionEnabled( false );
-    		if ( selectFile.showSaveDialog( subPanel ) == JFileChooser.APPROVE_OPTION ) {
-    			fileChooserCurrentDir = selectFile.getCurrentDirectory();
-    			File theFile = selectFile.getSelectedFile();
-
-				FileOutputStream output = null;
-    			try { 
-	    			output = new FileOutputStream( theFile );
-	    			output.write( fileContent );
-    			} catch( FileNotFoundException fnfe ) {
-    				JOptionPane.showMessageDialog( subPanel, fnfe.getMessage(), "Erro ao salvar arquivo", JOptionPane.ERROR_MESSAGE );
-    			} catch( IOException ioe ) {
-    				JOptionPane.showMessageDialog( subPanel, ioe.getMessage(), "Erro ao salvar arquivo", JOptionPane.ERROR_MESSAGE );
-    			}	
-    			
-    			// Now close the file if we can
-    			try {
-    				if ( output != null ) { 
-		    			output.close();
-    				}	
-    			} catch( IOException ioe ) {
-    			}		
-    		}	
+//    		JFileChooser selectFile = new JFileChooser( fileChooserCurrentDir );
+//    		selectFile.setMultiSelectionEnabled( false );
+//    		if ( selectFile.showSaveDialog( subPanel ) == JFileChooser.APPROVE_OPTION ) {
+//    			fileChooserCurrentDir = selectFile.getCurrentDirectory();
+//    			File theFile = selectFile.getSelectedFile();
+//
+//				FileOutputStream output = null;
+//    			try { 
+//	    			output = new FileOutputStream( theFile );
+//	    			output.write( fileContent );
+//    			} catch( FileNotFoundException fnfe ) {
+//    				JOptionPane.showMessageDialog( subPanel, fnfe.getMessage(), "Erro ao salvar arquivo", JOptionPane.ERROR_MESSAGE );
+//    			} catch( IOException ioe ) {
+//    				JOptionPane.showMessageDialog( subPanel, ioe.getMessage(), "Erro ao salvar arquivo", JOptionPane.ERROR_MESSAGE );
+//    			}	
+//    			
+//    			// Now close the file if we can
+//    			try {
+//    				if ( output != null ) { 
+//		    			output.close();
+//    				}	
+//    			} catch( IOException ioe ) {
+//    			}		
+//    		}	
         } else {
     		if ( hexDisplay == false ) {
-        		toHexString();
+        		//toHexString();
     		} else {
-        		toCharString();
+        		//toCharString();
         	}	
     	}	
     }    
@@ -353,7 +352,7 @@ public class SubPanel implements ActionListener {
         hexDisplay = true;
         subLabel.setText( PANEL_TITLE + " - exibição em hexadecimal" );
         mqttMgr.setTitleText("");
-        hexButton.setText("Texto");
+        //hexButton.setText("Texto");
     	receivedData.setText( hexText.toString() );
     }	
     
@@ -381,7 +380,7 @@ public class SubPanel implements ActionListener {
                 hexDisplay = false;
                 subLabel.setText( PANEL_TITLE + " - exibição de texto" );
     			mqttMgr.setTitleText( "" );
-                hexButton.setText("Hex");
+                //hexButton.setText("Hex");
     		    receivedData.setText( new String(charArray) );
     		} catch( NumberFormatException nfe ) {
 
