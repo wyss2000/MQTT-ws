@@ -214,9 +214,9 @@ public class PubPanel implements ActionListener, DocumentListener {
         		// Publish the fileContent or the JTextArea contents. The file contents are the most
         		// current if fileContent is not null.
                 mqttMgr.publish( topicName,
-                				   (fileContent == null) ? pubText.getBytes() : fileContent,
-                				   qosList.getSelectedIndex(),
-                				   retained.isSelected() );
+                    (fileContent == null) ? pubText.getBytes() : fileContent,
+                    qosList.getSelectedIndex(),
+                    retained.isSelected() );
                 try {
                     ConexaoAccessJava8 conecta = new ConexaoAccessJava8();
                     conecta.conexao();
