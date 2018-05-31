@@ -220,8 +220,11 @@ public class PubPanel implements ActionListener, DocumentListener {
                 try {
                     ConexaoAccessJava8 conecta = new ConexaoAccessJava8();
                     conecta.conexao();
-                    PreparedStatement pst = conecta.conn.prepareStatement("insert into Clie1 (ID)values(?)");
-                    pst.setString(1, pubText);
+                    PreparedStatement pst = conecta.conn.prepareStatement("insert into Clie1 (Topico,QOS,Retido,Mensagem)values(?,?,?,?)");
+                    pst.setString(1, topicName);
+                    pst.setString(2, (String) qosList.getSelectedItem().toString());
+                    pst.setBoolean(3, retained.isSelected());
+                    pst.setString(4, pubData.getText());
                     pst.executeUpdate();
                     System.out.println("Salvo com sucesso");
                 } catch (SQLException ex) {
