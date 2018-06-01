@@ -242,19 +242,16 @@ public class SubPanel implements ActionListener {
             // Unsubscribe
             mqttMgr.subscription( topicName, 0, false );
     	} else if ( e.getActionCommand().equals("Salvar...") ) {
-            ResultSet rs;
-            Statement stm = null;
-
             try {
                 ConexaoAccessJava8 conecta = new ConexaoAccessJava8();
                 conecta.conexao();
                 PreparedStatement pst = conecta.conn.prepareStatement("insert into Clie2 (Topico,QOS,Retido,Mensagem)values(?,?,?,?)");
-                pst.setString(1, "a");
-                pst.setString(2, "b");
-                pst.setBoolean(3, false);
-                pst.setString(4, "15");
-                //pst.setString(5, rs.getInt("Seq"));
+                pst.setString(1, receivedTopic.getText());
+                pst.setString(2, receivedQoS.getText());
+                pst.setBoolean(3, receivedRetain.isSelected());
+                pst.setString(4, receivedData.getText());
                 pst.executeUpdate();
+                pst.close();
                 System.out.println("Salvo com sucesso");
             } catch (SQLException ex) {
                 System.out.println("Erro no salvamento: " +ex);
