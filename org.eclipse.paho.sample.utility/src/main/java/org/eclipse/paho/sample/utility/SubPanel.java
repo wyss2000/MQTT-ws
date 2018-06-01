@@ -245,11 +245,30 @@ public class SubPanel implements ActionListener {
             try {
                 ConexaoAccessJava8 conecta = new ConexaoAccessJava8();
                 conecta.conexao();
-                PreparedStatement pst = conecta.conn.prepareStatement("insert into Clie2 (Topico,QOS,Retido,Mensagem)values(?,?,?,?)");
+                conecta.executaSQL("select * from Clie1");
+                conecta.res.last();
+                
+                //Transferindo os dados de Clie1 para a tela
+                this.receivedTopic.setText(String.valueOf(conecta.res.getString("Topico")));
+                this.receivedQoS.setText(String.valueOf(conecta.res.getString("QOS")));
+                this.receivedRetain.setSelected(conecta.res.getBoolean("Retido"));
+                this.receivedData.setText(String.valueOf(conecta.res.getString("Mensagem")));
+                this.receivedTopic.setToolTipText(String.valueOf(conecta.res.getString("Seq")));
+                
+                //JOptionPane.showMessageDialog(null, "Mostrando dados:\n"+conecta.res.getString("Seq"));
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,"Erro em mostrar dados: " +ex);
+            }
+            
+            try {
+                ConexaoAccessJava8 conecta = new ConexaoAccessJava8();
+                conecta.conexao();
+                PreparedStatement pst = conecta.conn.prepareStatement("insert into Clie2 (Topico,QOS,Retido,Mensagem,Seq)values(?,?,?,?,?)");
                 pst.setString(1, receivedTopic.getText());
                 pst.setString(2, receivedQoS.getText());
                 pst.setBoolean(3, receivedRetain.isSelected());
                 pst.setString(4, receivedData.getText());
+                pst.setString(5, receivedTopic.getToolTipText());
                 pst.executeUpdate();
                 pst.close();
                 System.out.println("Salvo com sucesso");

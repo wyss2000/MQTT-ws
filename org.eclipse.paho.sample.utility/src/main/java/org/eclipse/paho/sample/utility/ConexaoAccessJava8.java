@@ -58,7 +58,7 @@ public class ConexaoAccessJava8 {
             stm = conn.createStatement(res.TYPE_SCROLL_INSENSITIVE, res.CONCUR_READ_ONLY);
             res = stm.executeQuery(sql);
         } catch (SQLException ex) {
-            //JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL!\n Erro"+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL!\n Erro"+ex.getMessage());
         }
     }
         
