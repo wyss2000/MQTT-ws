@@ -28,6 +28,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -176,14 +181,9 @@ public class SubPanel implements ActionListener {
         buttons.setLayout( new GridLayout(4,1) );
         
         hexDisplay = false;
-        //hexButton = new JButton( "Salvar em Clie2" );
-        //hexButton.addActionListener( this );
-        //hexButton.setVisible(false);
-
 		fileButton = new JButton( "Salvar..." );
 		fileButton.setEnabled(true);
 		fileButton.addActionListener( this );
-
     	subButton = new JButton( "Subscrever" );
     	subButton.setEnabled(false);
 		subButton.addActionListener( this );
@@ -242,6 +242,24 @@ public class SubPanel implements ActionListener {
             // Unsubscribe
             mqttMgr.subscription( topicName, 0, false );
     	} else if ( e.getActionCommand().equals("Salvar...") ) {
+            ResultSet rs;
+            Statement stm = null;
+
+            try {
+                ConexaoAccessJava8 conecta = new ConexaoAccessJava8();
+                conecta.conexao();
+                PreparedStatement pst = conecta.conn.prepareStatement("insert into Clie2 (Topico,QOS,Retido,Mensagem)values(?,?,?,?)");
+                pst.setString(1, "a");
+                pst.setString(2, "b");
+                pst.setBoolean(3, false);
+                pst.setString(4, "15");
+                //pst.setString(5, rs.getInt("Seq"));
+                pst.executeUpdate();
+                System.out.println("Salvo com sucesso");
+            } catch (SQLException ex) {
+                System.out.println("Erro no salvamento: " +ex);
+            }
+        
 //    		JFileChooser selectFile = new JFileChooser( fileChooserCurrentDir );
 //    		selectFile.setMultiSelectionEnabled( false );
 //    		if ( selectFile.showSaveDialog( subPanel ) == JFileChooser.APPROVE_OPTION ) {
