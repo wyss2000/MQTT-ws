@@ -51,7 +51,7 @@ public class MQTTHist extends JDialog implements ActionListener, Runnable {
 	 */
 	public MQTTHist( JFrame theOwner, ConnOpts connOptions ) {
 
-		super( theOwner, "WMQTT Client History" );
+		super( theOwner, "Histórico do MQTT" );
 		
 		this.owner = theOwner;		
         this.connOptions = connOptions;
