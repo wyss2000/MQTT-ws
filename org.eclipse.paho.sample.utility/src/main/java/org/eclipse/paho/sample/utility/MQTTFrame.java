@@ -576,9 +576,9 @@ public class MQTTFrame implements ActionListener, MqttCallback, Runnable {
    	// created by the Java MQTT Client
    	public synchronized void setTitleText( String extraText ) {
    		if ( extraText.equals("") ) {
-     		frame.setTitle( "Utilitário MQTT(Paho)" );
+     		frame.setTitle( "Envio e recebimento de mensagens via MQTT" );
    		} else {
-    		frame.setTitle( "Utilitário MQTT(Paho) - " + extraText );
+    		frame.setTitle( "Envio e recebimento de mensagens via MQTT - " + extraText );
    		}		
    	}	
 
