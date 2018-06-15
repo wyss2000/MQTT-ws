@@ -1,0 +1,4 @@
+https://github.com/eclipse/paho.mqtt.java.git
+http://www.feltex.com.br/felix/jdbc-conectar-banco-dados-microsoft-access/
+https://www.youtube.com/watch?v=w94fUTDQdzQ
+http://ucanaccess.sourceforge.net/site.html
